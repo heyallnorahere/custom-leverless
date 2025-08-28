@@ -2,12 +2,13 @@
 ## What is this?
 
 I built a video game controller to play fighting games with. It connects to a computer or game
-console via USB-C, and sends button inputs as a PlayStation 4 controller.
+console via USB-C, and sends button inputs as a PlayStation 4 controller. As of writing this, I've
+been using it for ~4 months. It works great.
 
 ![Final result](images/controller.png)
 *Final result*
 
-It's built out of grey PLA 3D printer filament (todo: double check) and laser-cut acrylic for the
+It's built out of grey PLA 3D printer filament and laser-cut acrylic for the
 controller case, and transparent white PETG filament for the button keycaps. I designed and ordered
 a custom PCB (**p**rinted **c**ircuit **b**oard) to connect each Kailh Low Profile Choc V2 key
 switch to the Raspberry Pi Pico which sends input to the console using the
@@ -117,10 +118,40 @@ I never really solved the issue.
 
 ### Case
 
-I designed the controller's case in Onshape, my CAD program of choice.
+I designed the controller's case in Onshape, my CAD program of choice. I had experience with Onshape
+in mechanical design; I had designed and successfully built a
+[3D-printed swerve robot](https://github.com/heyallnorahere/pancake) in the software.
+
+I designed most of the case to be 3D-printed (shown in black). I chose to 3D-print the majority of
+the case's pieces because I had experience creating robust 3D-printed parts, and they hold up well
+under a lot of stress if designed adequately. Of course, this controller wouldn't be intentionally
+smashed on the ground, however I didn't want to unintentionally break the case while smacking
+buttons fast.
+
+I created large, flat pieces on the top and on the sides, which would be laser-cut out of clear or
+frosted acrylic (shown in light gray). The large, clear panel on the top was to provide a
+satisfying, smooth texture when I rested my hands on it, and also to allow pieces of art (stickers,
+prints) to be inserted between the panel layer and the 3D-printed top plate.
+
+On the sides, I created notches in the top and bottom plates to allow acrylic shields to slot in. I
+cut these out of frosted acrylic because it was fairly cheap at the plastic store that I went to to
+get the clear sheets, and it just looked cooler than more 3D-printed parts.
+
+I also created a bar on the edge of the acrylic panel to put a keychain on. When I finished building
+the controller, I attached a charm depicting the Guilty Gear character that I use, Anji Mito.
 
 ![Final CAD assembly](images/cad.png)
-*Final CAD assembly*
+[*Final CAD assembly*](https://cad.onshape.com/documents/aba2c960a3e5510f5926282e/w/0d57f165bb6395cbb5d6fa38/e/a4139b9da1757131feb00a80)
+
+I loosely based the button layout of my new controller off of my old one. There were several
+modifications that I made, such as the inclusion of a thumb button next to "up," an extra button
+above the PlayStation "square" button, and a system button above "down." After building this and
+using the controller for nearly 4 months, I have not adapted to using the additional buttons.
+However, they are helpful for niche use cases while practicing mechanically intense techniques in
+STRIVE's training mode.
+
+![New layout](images/layout.png)
+![Old layout](images/old/layout.png)
 
 ### Custom PCB and LEDs
 
@@ -134,7 +165,11 @@ I found a footprint library for common keyboard switches. This library included 
 switches, which I was easily able to adapt into my project. The PCB has mounts for 18 switches in
 total, each mapped to the default pin of the button the switch represents.
 
-The Raspberry Pi Pico can be mounted in two ways: removable Dupont headers or surface-mounting.
+The Raspberry Pi Pico can be mounted in two ways: removable Dupont headers or surface-mounting. I
+decided to use Dupont headers for prototyping, even though they take more space. This was reflected
+in my PCB design. I never ended up going back to reiterate on the PCB design, so even though I could
+have optimized the space usage, I held off because of the overhead that comes with ordering a batch
+of PCBs.
 
 As I was about to submit my PCB to be manufactured, I thought to add RGB LEDs to the design, as
 GP2040-CE had built-in support for controlling them. The Kailh switches conveniently have small
@@ -149,3 +184,81 @@ have support for two authentication methods: passthrough USB dongle, and vendor 
 dongles fake the signature of an official Sony controller while allowing the firmware to handle
 controller inputs directly. The other option requires the dumping of controller keys to the board's
 firmware. I opted for the first one initially, and so I added a USB receptacle to the PCB's design.
+
+### Assembly
+
+The assembly process was fairly uneventful once the PCBs arrived. I drove to a plastics store to
+pick up 4 large sheets of acrylic (2 per kind of acrylic * (clear + frosted)). I laser-cut the
+acrylic parts, and printed the remaining parts out of grey PLA.
+
+While assembling, I realized that I did not add ground planes around each screw hole in the PCB. I
+was forced to use non-conducting hardware to bolt in the PCB, which thankfully I had in nylon M3
+bolts and nuts.
+
+## Major challenges
+
+**8-minute timeout**. Even after attaching the USB dongle through the soldered-in USB receptacle,
+the controller still experienced the dreaded 8-minute timeout on PS4 and PS5 consoles. I checked the
+solder joints, the GP2040 configuration on the RPi, and the PCB traces, however I could not come up
+with an explanation for why this was happening. A week before EVO 2025 in August, I was still
+experiencing the issue at a local when my friend suggested I use dumped authentication keys from a
+PS4 controller. When I got home that weekend, I went through the process of getting PS4
+authentication keys into GP2040, thus solving the issue.
+
+**Loose keys**. Even as I tried to mitigate the issue of keys popping off of the switches, it still
+kept happening whenever I took my controller to an event. This is particularly noticable on the
+tall, thin system keys, where it takes little force to knock them off of the switches. As of
+writing, I still have not solved this issue.
+
+**Transparent PETG burning while printing**. While printing the keys initially, the PETG stuck to
+the hot end of the print head, creating burn artifacts and deforming the keys. I mitigated this
+issue by applying a non-stick coating to the hot end before printing, although burn artifacts are
+still slightly noticable on some keys I have on.
+
+## What went well?
+
+**Tariff dodging**. PCBWay operates and manufactures PCBs in China. I ordered PCBs on April 12th,
+2025, just a week or two before the nastier tariffs came into effect. This order of PCBs only cost
+me around $80, and with the minimum batch of 5 PCBs per order, this came out to $20 per PCB. If I
+waited a little bit longer to order PCBs, the cost of this project would have ballooned out of
+control. On the other hand, however, if I were mass-producing these controllers, the total cost of
+the project would have been ~$60 in total, not accounting for 3D printing filament and M3 hardware.
+
+**PCB worked on the first try**. I triple checked the traces of both the switches and LEDs in
+relation to the RPi Pico before ordering. Due to this diligence in all aspects other than console
+authentication, the first build of this controller worked as well as I could have hoped for,
+functionally.
+
+**Controller feels good to use**. I was initially slightly shocked by how small the buttons were. I
+had made the layout of the buttons slightly more compact than it was on my previous controller.
+However, several months down the line, using it feels second-nature.
+
+**Looks cool as hell**. With the firmware's native support of these LED chips, and the transparent
+keycaps, when plugged in, the keycaps give off the illusion that they themselves are glowing. I was
+able to create my own custom color profile for the keys with GP2040's web configuration. This truly
+made it feel like my own project.
+
+## Lessons learned
+
+**Use the simplest option when possible**. The 8-minute timeout was an issue in the first place
+because I didn't want to dump keys from an official controller. In retrospect, I should have used
+the option that was least prone to error with the scope of my experience that was specialized in
+software.
+
+**Stick with the original goal**. In retrospect, I should have stuck with making this controller as
+slim as possible. I used Dupont headers on the Raspberry Pi initially for prototyping, however I
+should have doubled down on the slimness aspect as soon as the USB port was rendered obsolete, and
+ordered another iteration of the PCB with solder-mount joints for the Raspberry Pi.
+
+## What's next?
+
+**Secure down the buttons**. While diving deeper into controller design, I looked into how people
+typically secure keycaps on controllers. The most common method that I can find is with lips on the
+edges of the keycaps that slot into notches in the controller, keeping them from falling off. This
+seems like a much more practical design than a simple friction fit, and would likely be the next
+method that I would try in a second iteration.
+
+**Make the case slimmer**. As it is right now, the controller barely fits in the laptop slot of my
+backpack. In a second iteration, I would solder the Raspberry Pi directly onto the edge of the PCB,
+and use a shorter micro USB to USB-C cable connecting the Raspberry Pi's UART port to the outside
+of the case. I would also remove the USB receptable, as it is no longer necessary.
