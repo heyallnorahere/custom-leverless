@@ -39,8 +39,8 @@ distinct directional buttons. This allows very quick, abstracted motion on the c
 "joystick." This style of controller is called a "leverless" controller, forsaking the classic
 "lever" in favor of four buttons.
 
-![Mad Catz T.E.3 Arcade Fight Stick](https://www.bhphotovideo.com/cdn-cgi/image/fit=scale-down,width=500,quality=95/https://www.bhphotovideo.com/images/images500x500/mad_catz_gapccainbl001_0_t_e_3_arcade_fight_stick_1682421923_1762174.jpg)
-*Mad Catz T.E.3 Arcade Fight Stick*
+![8Bitdo Arcade Stick](https://thepihut.com/cdn/shop/products/8bitdo-arcade-stick-8bitdo-104507-29730969616579.jpg?v=1646741533)
+*8Bitdo Arcade Stick*
 
 I have built a leverless controller in the past. I used a
 [Brook UFB Fusion](https://www.brookaccessory.com/products/ufbfusion/index.html) board to deliver
